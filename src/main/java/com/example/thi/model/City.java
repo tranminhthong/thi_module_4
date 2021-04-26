@@ -3,6 +3,7 @@ package com.example.thi.model;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -14,17 +15,17 @@ public class City {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotEmpty(message = "Not empty")
+    @NotEmpty(message = "Không được để trống")
     private String name;
 
-    @NotNull(message = "Not empty")
-    private double area;
+    @NotNull(message = "Không được để trống") @Min(value = 0L,message = "Không âm")
+    private Double area;
 
-    @NotNull(message = "Not empty")
+    @NotNull(message = "Không được để trống") @Min(value = 0L,message = "Không âm")
     private Long population;
 
-    @NotNull(message = "Not empty")
-    private double GDP;
+    @NotNull(message = "Không được để trống") @Min(value = 0L,message = "Không âm")
+    private Double GDP;
 
     private String description;
 

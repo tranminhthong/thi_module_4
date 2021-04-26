@@ -49,4 +49,9 @@ public class CityService implements ICityService {
         TypedQuery<Country> query = em.createQuery("select c from Country c", Country.class);
         return query.getResultList();
     }
+
+    @Override
+    public Page<City> search(String key,Pageable pageable) {
+        return cityRepo.findAllCityByKey("%"+key+"%",pageable);
+    }
 }

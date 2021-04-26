@@ -18,4 +18,6 @@ public interface ICityService {
     City delete(Long id);
 
     List<Country> findAllCountry();
+
+    Page<City> search(String key,Pageable pageable);
 }

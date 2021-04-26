@@ -9,10 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -50,12 +47,12 @@ public class CityController {
         ModelAndView modelAndView;
         if (bindingResult.hasFieldErrors()) {
             modelAndView = new ModelAndView("create");
-            modelAndView.addObject("message", "Create fail!!!");
+            modelAndView.addObject("message", "Tạo thất bại!!!");
             return modelAndView;
         }
         cityService.save(city);
         modelAndView = new ModelAndView("redirect:/list");
-        redirectAttributes.addFlashAttribute("message", "Created success!!!");
+        redirectAttributes.addFlashAttribute("message", "Thêm thành công!!!");
         return modelAndView;
     }
 
@@ -84,11 +81,11 @@ public class CityController {
         ModelAndView modelAndView;
         if (bindingResult.hasFieldErrors()) {
             modelAndView = new ModelAndView("edit");
-            modelAndView.addObject("message", "Edit fail!!!");
+            modelAndView.addObject("message", "Sửa thất bại!!!");
             return modelAndView;
         }
         cityService.save(city);
-        redirectAttributes.addFlashAttribute("message", "Edit success!!!");
+        redirectAttributes.addFlashAttribute("message", "Sửa thành công!!!");
         modelAndView = new ModelAndView("redirect:/list");
         return modelAndView;
     }
@@ -107,7 +104,13 @@ public class CityController {
     public ModelAndView deleteDone(@PathVariable("id") Long id,RedirectAttributes redirectAttributes) {
         City city = cityService.delete(id);
         ModelAndView modelAndView = new ModelAndView("redirect:/list");
-        redirectAttributes.addFlashAttribute("message","Deleted success city: "+city.getName());
+        redirectAttributes.addFlashAttribute("message","Xóa thành công thành phố: "+city.getName());
         return modelAndView;
     }
+
+    @GetMapping("/search")
+    public ModelAndView search(@RequestParam("key") String key,Pageable pageable){
+        return new ModelAndView("list","cities",cityService.search(key,pageable));
+    }
+
 }
